@@ -1,0 +1,124 @@
+# Example ATOMIX ADV flags. Note the use of anchors via & to avoid repeating information
+Level1_raw_data: #atomix_level  
+   R_VEL_FLAGS:  &vel_time_boolean  # the & creates an alias vel_time_boolean to rewrite this info later
+        standard_name: status_flag # Modifier for standard_name of R_VEL_FLAGS
+        flag_masks: 
+           - 1
+           - 2 
+           - 4
+           - 8
+           - 16 
+           - 32
+           - 64
+           - 128
+        flag_meanings: | 
+           unknown
+           low_amplitude 
+           low_signal_noise_ratio             
+           low_correlation
+           large_obstruction_fish
+           pitch_roll_out_of_range              
+           spike
+           out_of_water_or_missing
+        
+        comment:  Flags denote the cause for removing velocity samples recorded by the instrument.
+     
+      # Add extra entries, which will appear as attributes in the netcdf    
+        qaqc_thresholds: | 
+           Insert what constitutes low correlation (<70) etc
+
+
+Level2_qaqc_velocities: #same booleans as Level1
+   R_VEL_FLAGS:  *vel_time_boolean
+
+## ================Level 2segmented =================
+#NO flags at the moment?
+#Level2S_segmented:
+#   R_VEL_FLAGS: &vel_time_enumerated
+#        standard_name: status_flag
+#        flag_values: 
+#           - 0
+#           - 1 
+#           - 4
+#           - 6
+#           - 8 
+#           - 9
+#
+#        flag_meanings: | 
+#           unknown
+#           good
+#           unreplaced_bad_sample   # or missing         
+#           replaced_with_white_noise
+#           interpolated_value
+#           missing_sample
+#        
+#        comment: These flags help identify how the missing data was replaced, if all all.
+#
+#   R_VEL_DETRENDED_FLAGS: *vel_time_enumerated
+   
+
+## ================Level 3 =================
+Level3_dll:
+   DLL_FLAGS: &spectra_boolean 
+        standard_name: status_flag
+        flag_masks: 
+           - 1
+           - 2 
+           - 4
+           - 8
+           - 16 
+           - 32
+           - 64
+           - 128
+        flag_meanings: |
+            unknown 
+            define2 
+            define3 
+            define4_using_underscores
+            define5_using_underscores 
+            define6_using_underscores 
+            define7_using_underscores
+            define8_using_underscores
+            
+        comment: Boolean flags to establish.....
+  
+  
+## ================Level 4 =================
+Level4_dissipation:
+   EPSI_FLAGS: &epsi_boolean
+        standard_name: status_flag
+        flag_masks: 
+           - 1
+           - 2 
+           - 4
+           - 8
+           - 16 
+           - 32
+           - 64
+           - 128
+        flag_meanings: |
+           unknown
+           non_stationary
+           failed_taylor_hypothesis
+           inertial_model_mad_misfit
+           spectral_slope_outside_desired_range
+           too_anisotropic
+           noise_dominated_spectra
+           missing
+
+
+   EPSI_FINAL_FLAGS: &epsi_enumerated
+        standard_name: quality_flag
+        flag_values: 
+           - 0
+           - 1 
+           - 4
+           - 6
+           - 8 
+           - 9
+        flag_meanings: |
+           unknown
+           good_data
+           suspect_data
+           bad_data
+           missing_value
